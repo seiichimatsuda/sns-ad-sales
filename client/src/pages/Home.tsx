@@ -819,7 +819,7 @@ export default function Home() {
               <div className="w-8 h-8 bg-[#c45e3a] rounded-lg flex items-center justify-center">
                 <TrendingUp size={16} className="text-white" />
               </div>
-              <span className="font-serif-jp font-bold text-white">SNSグロース株式会社</span>
+              <span className="font-serif-jp font-bold text-white">松田システム技研</span>
             </div>
             <p className="text-white/40 text-sm">© 2026 SNSグロース株式会社. All rights reserved.</p>
           </div>
