@@ -821,7 +821,7 @@ export default function Home() {
               </div>
               <span className="font-serif-jp font-bold text-white">松田システム技研</span>
             </div>
-            <p className="text-white/40 text-sm">© 2026 SNSグロース株式会社. All rights reserved.</p>
+            <p className="text-white/40 text-sm">© 2026 松田システム技研All rights reserved.</p>
           </div>
         </div>
       </footer>
