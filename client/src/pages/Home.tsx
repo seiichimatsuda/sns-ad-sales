@@ -11,7 +11,13 @@ import {
   BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, Legend, AreaChart, Area
 } from "recharts";
-import { ChevronDown, TrendingUp, Users, Target, BarChart2, CheckCircle, ArrowRight, Phone, Mail, Star, Menu, X } from "lucide-react";
+import { ChevronDown, TrendingUp, Users, Target, BarChart2, CheckCircle, ArrowRight, Phone, Mail, Star, Menu, X, Calendar } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -295,6 +301,9 @@ function PlanCard({ name, price, adBudget, platforms, features, highlighted }: {
 export default function Home() {
   const [activeChart, setActiveChart] = useState<"users" | "cost" | "roi" | "platform">("users");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingData, setBookingData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const statsRef = useInView(0.3);
   const [scrolled, setScrolled] = useState(false);
 
@@ -307,6 +316,28 @@ export default function Home() {
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMobileMenuOpen(false);
+  };
+
+  const handleBookingSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bookingData.name || !bookingData.email || !bookingData.phone) {
+      toast.error("すべての必須項目を入力してください");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      // Here you would typically send the data to your backend
+      // For now, we'll just show a success message
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      toast.success("予約申し込みが完了しました。ご確認のメールをお送りします。");
+      setIsBookingOpen(false);
+      setBookingData({ name: "", email: "", phone: "", message: "" });
+    } catch (error) {
+      toast.error("申し込みに失敗しました。もう一度お試しください。");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -786,7 +817,7 @@ export default function Home() {
               「どのSNSを使えばいいか」「予算はどのくらい必要か」など、どんな些細なご質問でも構いません。専門コンサルタントが丁寧にお答えします。
             </p>
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8">
-              <button className="w-full bg-[#c45e3a] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#9e4a2c] transition-all duration-300 hover:shadow-xl flex items-center justify-center gap-2">
+              <button onClick={() => setIsBookingOpen(true)} className="w-full bg-[#c45e3a] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#9e4a2c] transition-all duration-300 hover:shadow-xl flex items-center justify-center gap-2">
                 無料相談を予約する（30分・オンライン）<ArrowRight size={20} />
               </button>
               <p className="text-white/50 text-xs mt-3">※ 無料相談はZoom・Google Meetにて実施します。費用は一切かかりません。</p>
@@ -809,6 +840,78 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* ── Booking Modal ── */}
+      <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
+        <DialogContent className="sm:max-w-[500px] bg-white">
+          <DialogHeader>
+            <DialogTitle className="font-serif-jp text-2xl text-[#2a2520]">無料相談を予約する</DialogTitle>
+            <DialogDescription className="text-[#5a4e42]">
+              以下の情報を入力してください。30分以内にご連絡させていただきます。
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleBookingSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-[#2a2520] font-semibold">お名前 *</Label>
+              <Input
+                id="name"
+                placeholder="山田太郎"
+                value={bookingData.name}
+                onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
+                className="border-[#e8e0d5] focus:border-[#c45e3a] focus:ring-[#c45e3a]"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-[#2a2520] font-semibold">メールアドレス *</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="example@company.com"
+                value={bookingData.email}
+                onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
+                className="border-[#e8e0d5] focus:border-[#c45e3a] focus:ring-[#c45e3a]"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-[#2a2520] font-semibold">電話番号 *</Label>
+              <Input
+                id="phone"
+                placeholder="090-1234-5678"
+                value={bookingData.phone}
+                onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
+                className="border-[#e8e0d5] focus:border-[#c45e3a] focus:ring-[#c45e3a]"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="message" className="text-[#2a2520] font-semibold">相談内容（任意）</Label>
+              <Textarea
+                id="message"
+                placeholder="例：Instagram広告の運用について相談したいです。"
+                value={bookingData.message}
+                onChange={(e) => setBookingData({ ...bookingData, message: e.target.value })}
+                className="border-[#e8e0d5] focus:border-[#c45e3a] focus:ring-[#c45e3a] min-h-[100px]"
+              />
+            </div>
+            <div className="flex gap-3 pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsBookingOpen(false)}
+                className="flex-1 border-[#e8e0d5] text-[#2a2520] hover:bg-[#faf8f4]"
+              >
+                キャンセル
+              </Button>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex-1 bg-[#c45e3a] text-white hover:bg-[#9e4a2c]"
+              >
+                {isSubmitting ? "送信中..." : "予約を確定する"}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
