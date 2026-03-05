@@ -786,22 +786,6 @@ export default function Home() {
               「どのSNSを使えばいいか」「予算はどのくらい必要か」など、どんな些細なご質問でも構いません。専門コンサルタントが丁寧にお答えします。
             </p>
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8">
-              <div className="grid sm:grid-cols-2 gap-4 mb-6">
-                <div className="flex items-center gap-3 bg-white/10 rounded-xl p-4">
-                  <Phone size={20} className="text-[#d4a843]" />
-                  <div className="text-left">
-                    <p className="text-white/60 text-xs">お電話でのご相談</p>
-                    <p className="text-white font-bold">03-XXXX-XXXX</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 bg-white/10 rounded-xl p-4">
-                  <Mail size={20} className="text-[#d4a843]" />
-                  <div className="text-left">
-                    <p className="text-white/60 text-xs">メールでのご相談</p>
-                    <p className="text-white font-bold">info@snsgrowth.jp</p>
-                  </div>
-                </div>
-              </div>
               <button className="w-full bg-[#c45e3a] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#9e4a2c] transition-all duration-300 hover:shadow-xl flex items-center justify-center gap-2">
                 無料相談を予約する（30分・オンライン）<ArrowRight size={20} />
               </button>
