@@ -321,7 +321,7 @@ export default function Home() {
             <div className="w-8 h-8 bg-[#c45e3a] rounded-lg flex items-center justify-center">
               <TrendingUp size={16} className="text-white" />
             </div>
-            <span className="font-serif-jp font-bold text-[#2a2520]">SNSグロース</span>
+            <span className="font-serif-jp font-bold text-[#2a2520]">SNS成長戦略</span>
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-[#5a4e42]">
             {[["課題", "challenges"], ["市場機会", "market"], ["サービス", "services"], ["料金", "pricing"], ["事例", "cases"]].map(([label, id]) => (
@@ -819,7 +819,7 @@ export default function Home() {
               <div className="w-8 h-8 bg-[#c45e3a] rounded-lg flex items-center justify-center">
                 <TrendingUp size={16} className="text-white" />
               </div>
-              <span className="font-serif-jp font-bold text-white">松田システム技研</span>
+              <span className="font-serif-jp font-bold text-white">SNS成長戦略</span>
             </div>
             <p className="text-white/40 text-sm">© 2026 松田システム技研All rights reserved.</p>
           </div>
